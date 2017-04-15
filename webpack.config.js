@@ -4,7 +4,7 @@ var buildPath = path.join(__dirname, 'dist');
 
 module.exports = {
   context: srcPath,
-  entry: path.join(srcPath, 'js', 'client.js'),
+  entry: path.join(srcPath, 'components', 'main.jsx'),
   output: {
       path: buildPath,
       filename: "bundle.js"
@@ -18,6 +18,10 @@ module.exports = {
             query: {
               presets: ['react', 'es2015']
             }
+           },
+          {
+            test: /\.scss$/,
+            loaders: ['style', 'css', 'sass']
           }
       ]
   }
