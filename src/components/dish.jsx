@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Panel  from 'react-bootstrap/lib/Panel';
 import { Button } from 'react-bootstrap';
 
-export default class dish extends React.Component {
+export default class Dish extends React.Component {
   constructor(props) {
     super(props);
   }

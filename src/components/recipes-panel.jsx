@@ -10,15 +10,15 @@ export default class RecipesPanel extends React.Component {
   dishesList = () => {
    const array = ['pasta', 'rice', 'salad'];
    const list = array.map((dish) =>
-    <Dish name = {dish.name} />
+   <Dish name = {dish} />
  );
  return list;
-  };
+  }
   render() {
     return (
      <div>
        <Panel header="Recipes Book" bsStyle="primary">
-       {this.dishesList().bind(this)}
+       {this.dishesList()}
        </Panel>
       </div>
     );

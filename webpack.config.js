@@ -16,6 +16,7 @@ module.exports = {
             exclude: /(node_modules|bower_components)/,
             loader: 'babel-loader',
             query: {
+              plugins: ['babel-plugin-transform-class-properties'],
               presets: ['react', 'es2015']
             }
            },
