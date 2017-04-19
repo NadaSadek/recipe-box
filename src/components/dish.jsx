@@ -1,19 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Panel  from 'react-bootstrap/lib/Panel';
-import { Button } from 'react-bootstrap';
 
 export default class Dish extends React.Component {
   constructor(props) {
     super(props);
   }
+  ingredientsFormat = (ingredients) => {
+    let ing;
+       const list = array.map((ingredient) =>
+       ing += ingredient + ","
+
+       )
+  };
+
   render() {
     return (
-     <div>
-       <Panel bsStyle="primary">
-        {this.props.name}
+       <Panel header = {this.props.name} eventKey = {this.props.key} >
+        {this.props.ingredients}
        </Panel>
-      </div>
     );
   }
 }
