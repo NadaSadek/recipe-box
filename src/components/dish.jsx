@@ -7,17 +7,13 @@ export default class Dish extends React.Component {
     super(props);
   }
   ingredientsFormat = (ingredients) => {
-    let ing;
-       const list = array.map((ingredient) =>
-       ing += ingredient + ","
-
-       )
+    return list.join();
   };
 
   render() {
     return (
        <Panel header = {this.props.name} eventKey = {this.props.key} >
-        {this.props.ingredients}
+        {this.ingredientsFormat(this.props.ingredients)}
        </Panel>
     );
   }

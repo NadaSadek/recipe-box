@@ -29,15 +29,17 @@ export default class RecipesPanel extends React.Component {
   dishesList = () => {
    const array = (localStorage.getItem('_username_recipes') !== null)? JSON.parse(localStorage.getItem("_username_recipes")): [];
    const list = array.map((dish) =>
-   <Dish key = {dish.id} name = {dish.title} ingredients = {dish.ingredients}/>
+   <Dish key = {parseInt(dish.id)} name = {dish.title} ingredients = {dish.ingredients}/>
  );
  return list;
   }
   render() {
     return (
-       <PanelGroup  activeKey = {this.state.activeKey} onSelect = {this.handleSelect} accordion>
+       <Panel bsClass="primary">
+       <Accordion>
        {this.dishesList()}
-     </PanelGroup>
+     </Accordion>
+     </Panel>
     );
   }
 }

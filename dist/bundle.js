@@ -17927,6 +17927,8 @@ var _Modal2 = _interopRequireDefault(_Modal);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -17955,10 +17957,30 @@ var AddRecipeButton = function (_React$Component) {
 
     _this.saveRecipe = function () {
       _this.closeModal();
+      var recipesList = localStorage.getItem('_username_recipes') !== null ? JSON.parse(localStorage.getItem("_username_recipes")) : [];
+      var id = parseInt(recipesList[recipesList.length - 1].id) + 1;
+      console.log(recipesList[recipesList.length - 1] + "" + id);
+      var newRecipe = { "id": id.toString(), "title": _this.state.title, "ingredients": _this.state.ingredients.split(", ") };
+      recipesList.push(newRecipe);
+      localStorage.setItem("_username_recipes", JSON.stringify(recipesList));
+      _this.setState(function (prevState) {
+        return { nextId: prevState.nextId + 1 };
+      });
+      console.log("after: " + id);
+    };
+
+    _this.handleInputChange = function (event) {
+      var target = event.target;
+      var value = target.value;
+      var name = target.name;
+
+      _this.setState(_defineProperty({}, name, value));
     };
 
     _this.state = {
-      showAddRecipeModal: false
+      showAddRecipeModal: false,
+      title: "",
+      ingredients: "separate ingredients by ,"
     };
     return _this;
   }
@@ -17997,13 +18019,13 @@ var AddRecipeButton = function (_React$Component) {
                 null,
                 'Recipe'
               ),
-              _react2.default.createElement('input', { type: 'text', className: 'form-control' }),
+              _react2.default.createElement('input', { type: 'text', name: 'title', onChange: this.handleInputChange, className: 'form-control' }),
               _react2.default.createElement(
                 'label',
                 null,
                 'Ingredients'
               ),
-              _react2.default.createElement('textarea', { type: 'text', className: 'form-control' })
+              _react2.default.createElement('textarea', { type: 'text', name: 'ingredients', onChange: this.handleInputChange, className: 'form-control' })
             )
           ),
           _react2.default.createElement(
@@ -18113,9 +18135,13 @@ var RecipesPanel = function (_React$Component) {
     key: 'render',
     value: function render() {
       return _react2.default.createElement(
-        _PanelGroup2.default,
-        { activeKey: this.state.activeKey, onSelect: this.handleSelect, accordion: true },
-        this.dishesList()
+        _Panel2.default,
+        { bsClass: 'primary' },
+        _react2.default.createElement(
+          _PanelGroup2.default,
+          { defaultActiveKey: '1', accordion: true },
+          this.dishesList()
+        )
       );
     }
   }]);
@@ -18167,10 +18193,11 @@ var Dish = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (Dish.__proto__ || Object.getPrototypeOf(Dish)).call(this, props));
 
     _this.ingredientsFormat = function (ingredients) {
-      var ing = void 0;
-      var list = array.map(function (ingredient) {
-        return ing += ingredient + ",";
+      var ing = "";
+      var list = ingredients.map(function (ingredient) {
+        return ing += ingredient + ", ";
       });
+      return ing.replace(/\,$/, '');
     };
 
     return _this;
@@ -18182,7 +18209,7 @@ var Dish = function (_React$Component) {
       return _react2.default.createElement(
         _Panel2.default,
         { header: this.props.name, eventKey: this.props.key },
-        this.props.ingredients
+        this.ingredientsFormat(this.props.ingredients)
       );
     }
   }]);
